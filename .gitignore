@@ -2,11 +2,6 @@
 
 
 package-lock.json
-
-# Docs
-jsDocs
-apiDocs
-
 # Logs
 logs
 *.log

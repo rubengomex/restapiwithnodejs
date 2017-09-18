@@ -1,0 +1,15 @@
+{
+  "name": "Blog API",
+  "version": "0.0.1",
+  "description": "Simple blog API to guide the REST API with Node.JS sessions.",
+  "title": "Blog API",
+  "url" : "https://restapiwithnodejs.com/api/",
+  "header": {
+  	"title" : "",
+  	"filename": "apiDocs/header.md"
+  },
+  "footer": {
+  	"title" : "",
+  	"filename": "apiDocs/footer.md"
+  }
+}
