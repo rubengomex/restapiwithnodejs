@@ -1,3 +1,5 @@
+const {User: UserModel, Post: PostModel} = require('../models');
+
 /**
  * @memberOf module:Users
  * @author Rúben Gomes <gomesruben21@gmail.com>
@@ -12,7 +14,9 @@ class User{
      *
      * @return {Promise} Returns a promise with an array of users as a resolved value.
      */
-    static async getAll(){}
+    static async getAll(){
+        return await UserModel.find().select('id name email');
+    }
 
     /**
      * Gets a user information.
@@ -22,7 +26,9 @@ class User{
      *
      * @return {Promise} Returns a promise with an user object as a resolved value.
      */
-    static async getOne(id){}
+    static async getOne(id){
+        return await UserModel.findById(id).select('id name email');
+    }
 
     /**
      * Gets all user posts information.
@@ -32,7 +38,9 @@ class User{
      *
      * @return {Promise} Returns a promise with an array of user posts objects as a resolved value.
      */
-    static async getPosts(id){}
+    static async getPosts(id){
+        return await PostModel.find({author: id}).populate('author', 'name email');
+    }
 
     /**
      * Create a user.
@@ -41,7 +49,9 @@ class User{
      *
      * @return {Promise} Returns a promise with a created user object as a resolved value.
      */
-    static async create(){}
+    static async create(data){
+        return await new UserModel(data).save();
+    }
 
     /**
      * Creates a user post
@@ -51,7 +61,11 @@ class User{
      *
      * @return {Promise} Returns a promise with a user post object as a resolved value.
      */
-    static async createPost(id){}
+    static async createPost(id, data){
+        const user = await User.getOne(id);
+        data.author = user;
+        return await new PostModel(data).save();
+    }
 
     /**
      * Updates a user 
@@ -72,7 +86,9 @@ class User{
      *
      * @return {Promise} Returns a promise with a user post object as a resolved value.
      */
-    static async updatePost(id, postId){}
+    static async updatePost(id, postId, data){
+        return await PostModel.findOneAndUpdate({_id: postId, author: id}, {$set : data}, {new: true});
+    }
 
     /**
      * Deletes a user 
@@ -82,7 +98,9 @@ class User{
      *
      * @return {Promise} Returns a promise with a user object as a resolved value.
      */
-    static async delete(id){}
+    static async delete(id){
+        return await UserModel.findByIdAndRemove(id).select('id name email');
+    }
 
     /**
      * Deletes user posts
@@ -92,7 +110,9 @@ class User{
      *
      * @return {Promise} Returns a promise with an array of user posts objects as a resolved value.
      */
-    static async deletePosts(id){}
+    static async deletePosts(id){
+        return await PostModel.deleteMany({author: id});
+    }
 
     /**
      * Deletes a user post
@@ -103,7 +123,9 @@ class User{
      *
      * @return {Promise} Returns a promise with a user post object as a resolved value.
      */
-    static async deletePost(id, postId){}
+    static async deletePost(id, postId){
+        return await PostModel.findOneAndRemove({_id: postId, author: id});
+    }
 }
 
 module.exports = User;

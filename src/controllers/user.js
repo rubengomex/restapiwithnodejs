@@ -1,4 +1,4 @@
-//const User = require('../lib/users');
+const User = require('../lib/users');
 
 module.exports = {
     getUsers,
@@ -29,8 +29,15 @@ module.exports = {
  * ]
  */
 function getUsers(req, res, next){
-    res.json({method: 'getUsers'});
-    next();
+    User.getAll()
+        .then(users => {
+            res.json(users);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -49,8 +56,17 @@ function getUsers(req, res, next){
  * }
  */
 function getUser(req, res, next){
-    res.json({method: 'getUser'});
-    next();
+    const userId = req.params.id;
+
+    User.getOne(userId)
+        .then(user => {
+            res.json(user);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -74,8 +90,17 @@ function getUser(req, res, next){
  * }]
  */
 function getUserPosts(req, res, next){
-    res.json({method: 'getUserPosts'});
-    next();
+    const userId = req.params.id;
+
+    User.getPosts(userId)
+        .then(posts => {
+            res.json(posts);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -96,8 +121,15 @@ function getUserPosts(req, res, next){
  * }
  */
 function createUser(req, res, next){
-    res.json({method: 'createUser'});
-    next();
+    User.create(req.body)
+        .then(user => {
+            res.json(user);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -123,8 +155,16 @@ function createUser(req, res, next){
  * }
  */
 function createUserPost(req, res, next){
-    res.json({method: 'createUserPost'});
-    next();
+    const userId = req.params.id;
+    User.createPost(userId, req.body)
+        .then(post => {
+            res.json(post);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -151,8 +191,17 @@ function createUserPost(req, res, next){
  * }
  */
 function updateUserPost(req, res, next){
-    res.json({method: 'updateUserPost'});
-    next();
+    const userId = req.params.id;
+    const postId = req.params.postId;
+    User.updatePost(userId, postId, req.body)
+        .then(post => {
+            res.json(post);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -170,8 +219,16 @@ function updateUserPost(req, res, next){
  * }
  */
 function deleteUser(req, res, next){
-    res.json({method: 'deleteUser'});
-    next();
+    const userId = req.params.id;
+    User.delete(userId)
+        .then(user => {
+            res.json(user);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -198,8 +255,16 @@ function deleteUser(req, res, next){
  * }]
  */
 function deleteUserPosts(req, res, next){
-    res.json({method: 'deleteUserPosts'});
-    next();
+    const userId = req.params.id;
+    User.deletePosts(userId)
+        .then(posts => {
+            res.json(posts);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -223,6 +288,15 @@ function deleteUserPosts(req, res, next){
  * }
  */
 function deleteUserPost(req, res, next){
-    res.json({method: 'deleteUserPost'});
-    next();
+    const userId = req.params.id;
+    const postId = req.params.postId;
+    User.deletePost(userId, postId)
+        .then(post => {
+            res.json(post);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }

@@ -1,4 +1,4 @@
-//const Post = require('../lib/posts');
+const Post = require('../lib/posts');
 
 module.exports = {
     getPosts,
@@ -29,8 +29,15 @@ module.exports = {
  * }]
  */
 function getPosts(req, res, next){
-    res.json({method: 'getPosts'});
-    next();
+    Post.getAll()
+        .then(posts => {
+            res.json(posts);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -54,8 +61,16 @@ function getPosts(req, res, next){
  * }
  */
 function getPost(req, res, next){
-    res.json({method: 'getPost'});
-    next();
+    const postId = req.params.id;
+    Post.getOne(postId)
+        .then(post => {
+            res.json(post);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 
@@ -83,8 +98,15 @@ function getPost(req, res, next){
  * }
  */
 function createPost(req, res, next){
-    res.json({method: 'createPost'});
-    next();
+    Post.create(req.body)
+        .then(post => {
+            res.json(post);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -112,8 +134,16 @@ function createPost(req, res, next){
  * }
  */
 function updatePost(req, res, next){
-    res.json({method: 'updatePost'});
-    next();
+    const postId = req.params.id;
+    Post.update(postId, req.body)
+        .then(posts => {
+            res.json(posts);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
 
 /**
@@ -136,6 +166,14 @@ function updatePost(req, res, next){
  * }
  */
 function deletePost(req, res, next){
-    res.json({method: 'deletePost'});
-    next();
+    const postId = req.params.id;
+    Post.delete(postId)
+        .then(posts => {
+            res.json(posts);
+            next();
+        })
+        .catch(err => {
+            res.status(500).send({error: true, message: err});
+            next();
+        });
 }
