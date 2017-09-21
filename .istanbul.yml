@@ -5,6 +5,8 @@ instrumentation:
         - gulpfile.js
         - jsDocs/**/*
         - apiDocs/**/*
+        - src/controllers/**/*.js
+        - src/router.js
     include-all-sources: true
 check:
     global:

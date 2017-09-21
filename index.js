@@ -26,3 +26,5 @@ app.use('/api', api);
 app.listen(port, () => {
     console.log('Server listenning on port', port);
 });
+
+module.exports = app;
