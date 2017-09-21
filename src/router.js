@@ -20,7 +20,17 @@ const {
     updatePost,
     deletePost
 } = postController;
+const {authenticate, generateToken} = require('./lib/utils');
 
+
+// This route is public
+router.post('/getToken', generateToken);
+
+// Middleawre to authenticate the follow routes 
+router.use(authenticate);
+
+
+// Private routes
 /**
  * User routes
  */

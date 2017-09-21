@@ -42,7 +42,9 @@
     "cors": "2.8.4",
     "express": "4.15.4",
     "helmet": "3.8.1",
+    "jwt-simple": "0.5.1",
     "lodash": "4.17.4",
+    "moment": "2.18.1",
     "mongoose": "4.11.11",
     "morgan": "1.8.2"
   },
